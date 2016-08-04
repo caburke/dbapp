@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var events = $('#events');
+        var table = $('#example').DataTable( {
+            "processing": true,
+            "serverside": true,
+            "select": true,
+            "ajax": "{{ url_for('get_json')}}",
+            "columnDefs": [ {
+                "orderable": false,
+                "className": 'select-checkbox',
+                "targets":   0
+            } ],
+            "select": {
+                "style":    'os',
+                "selector": 'td:first-child'
+            },
+            "order": [[ 1, 'asc' ]]
+        });
+    } );
+</script>
+
+    <div class="container">
+        <table class="display" id="example">
+            <thead>
+                <tr>
+                    {% for col in columns %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    {% for col in columns %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+{% endblock %}
